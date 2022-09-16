@@ -2,7 +2,7 @@ from flask import jsonify
 from DAOdb import search_for_release_year, search_for_rating_g
 
 
-def create_a_json_dict(data):
+def create_a_dict_for_query(data):
     """
 
     :param data: list of tuple
@@ -18,7 +18,7 @@ def create_a_json_dict(data):
     return py_dict
 
 
-def create_json_for_years(data):
+def create_list_for_years(data):
     """
 
     :param data: list of tuples
@@ -33,7 +33,7 @@ def create_json_for_years(data):
     return list_of_dicts
 
 
-def create_json_for_rating(data):
+def create_list_for_rating(data):
     list_of_dicts = []
 
     for element in data:
@@ -43,4 +43,12 @@ def create_json_for_rating(data):
     return list_of_dicts
 
 
+def create_list_for_genres(data):
+    list_of_dicts = []
+
+    for element in data:
+        new_dict = {'title': element[0].strip(), 'description': element[1].strip()}
+        list_of_dicts.append(new_dict)
+
+    return list_of_dicts
 

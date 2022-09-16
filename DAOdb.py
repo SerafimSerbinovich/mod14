@@ -1,3 +1,4 @@
+import json
 import sqlite3
 
 
@@ -85,3 +86,51 @@ def search_for_rating_adult():
         result = cursor.fetchall()
 
         return result
+
+
+def get_ten_the_freshest_movie(genre):
+    with sqlite3.connect('netflix.db') as connection:
+        cursor = connection.cursor()
+
+        query = """
+                    SELECT title, description
+                    FROM netflix
+                    WHERE listed_in LIKE ?
+                    ORDER BY date_added DESC
+                    LIMIT 10"""
+
+        cursor.execute(query, ('%' + genre + '%',))
+        result = cursor.fetchall()
+
+        return result
+
+
+def search_for_type_release_year_and_genre(show_type, release, genre):
+    with sqlite3.connect('netflix.db') as connection:
+        cursor = connection.cursor()
+
+        query = """
+                    SELECT title, description
+                    FROM netflix
+                    WHERE type = ? 
+                    AND release_year = ? 
+                    AND listed_in LIKE ?
+                    """
+
+        cursor.execute(query, (show_type, release, '%' + genre + '%'))
+
+        result = cursor.fetchall()
+
+        return json.dumps(result)
+
+
+
+# def get_all_column():
+#     conn = sqlite3.connect("netflix.db")
+#     c = conn.cursor()
+#     c.execute("select * from netflix")
+#     return [member[0] for member in c.description]
+
+
+
+
