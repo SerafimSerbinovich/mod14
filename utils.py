@@ -1,5 +1,5 @@
 from flask import jsonify
-from DAOdb import search_for_release_year, search_for_rating
+from DAOdb import search_for_release_year, search_for_rating_g
 
 
 def create_a_json_dict(data):

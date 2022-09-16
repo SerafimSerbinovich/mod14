@@ -36,20 +36,52 @@ def search_for_release_year(lower, upper):
         return result
 
 
-def search_for_rating(rating):
+def search_for_rating_g():
     with sqlite3.connect('netflix.db') as connection:
         cursor = connection.cursor()
 
         query = """
                     SELECT title, rating, description
                     FROM netflix
-                    WHERE rating LIKE ?
+                    WHERE rating LIKE 'G'
                     LIMIT 100"""
 
-        cursor.execute(query, (rating,))
+        cursor.execute(query)
 
         result = cursor.fetchall()
 
         return result
 
 
+def search_for_rating_family():
+    with sqlite3.connect('netflix.db') as connection:
+        cursor = connection.cursor()
+
+        query = """
+                    SELECT title, rating, description
+                    FROM netflix
+                    WHERE rating IN ('G', 'PG', 'PG-13')
+                    LIMIT 100"""
+
+        cursor.execute(query)
+
+        result = cursor.fetchall()
+
+        return result
+
+
+def search_for_rating_adult():
+    with sqlite3.connect('netflix.db') as connection:
+        cursor = connection.cursor()
+
+        query = """
+                    SELECT title, rating, description
+                    FROM netflix
+                    WHERE rating IN ('R', 'NC-17')
+                    LIMIT 100"""
+
+        cursor.execute(query)
+
+        result = cursor.fetchall()
+
+        return result
