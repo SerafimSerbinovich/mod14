@@ -1,6 +1,3 @@
-from flask import jsonify
-from DAOdb import search_for_release_year, search_for_rating_g
-
 
 def create_a_dict_for_query(data):
     """
@@ -52,3 +49,18 @@ def create_list_for_genres(data):
 
     return list_of_dicts
 
+
+def create_list_for_actors(data):
+    list_of_lists = [[x for x in ''.join(y).split(', ')] for y in data]
+    appearance_count = {}
+    suitable_actors = []
+
+    for cast in list_of_lists:
+        for actor in cast:
+            appearance_count[actor] = appearance_count.get(actor, 0) + 1
+
+    for key, value in appearance_count.items():
+        if value > 2:
+            suitable_actors.append(key)
+
+    return suitable_actors

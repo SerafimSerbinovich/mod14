@@ -105,6 +105,22 @@ def get_ten_the_freshest_movie(genre):
         return result
 
 
+def search_for_certain_actors(first, second):
+    with sqlite3.connect('netflix.db') as connection:
+        cursor = connection.cursor()
+
+        query = """SELECT netflix.cast 
+                    FROM netflix
+                    WHERE netflix.cast LIKE ?
+                    AND netflix.cast LIKE ?"""
+
+        cursor.execute(query, ('%'+first+'%', '%'+second+'%'))
+
+        result = cursor.fetchall()
+
+        return result
+
+
 def search_for_type_release_year_and_genre(show_type, release, genre):
     with sqlite3.connect('netflix.db') as connection:
         cursor = connection.cursor()
@@ -122,15 +138,6 @@ def search_for_type_release_year_and_genre(show_type, release, genre):
         result = cursor.fetchall()
 
         return json.dumps(result)
-
-
-
-# def get_all_column():
-#     conn = sqlite3.connect("netflix.db")
-#     c = conn.cursor()
-#     c.execute("select * from netflix")
-#     return [member[0] for member in c.description]
-
 
 
 
